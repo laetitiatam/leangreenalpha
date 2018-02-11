@@ -1,7 +1,7 @@
 # leangreenalpha
 
 
-## Ojbectives for today: 
+## Objectives for today: 
 1. Set up repo
 2. Create android app that
    * takes a picture
