@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Mar  9 18:47:05 2018
-
-@author: lt
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Created on Fri Mar  9 17:59:53 2018
 
 @author: lt
@@ -15,6 +8,8 @@ Created on Fri Mar  9 17:59:53 2018
 from flask import Flask, jsonify, g, request
 from sqlite3 import dbapi2 as sqlite3
 import subprocess
+import json 
+
 #DATABASE = 'database.db'
 #app = Flask(__name__)
 
@@ -50,18 +45,35 @@ def init_db():
         db.commit()
 
 def add_food(item, price, quantity):
-    sql = "INSERT INTO price (item, price, quantity) VALUES('%s', '%f', %d)" %(item, float(price), int(quantity))
+    sql = "INSERT INTO price (item, dollars, quantity) VALUES('%s', '%f', %d)" %(item, float(price), int(quantity))
     db = get_db()
     db.execute(sql)
     res = db.commit()
     return res
 
-def new_order(item, order):
-    sql = "UPDATE orders SET order_qty = ('%d') WHERE item = ('%s')" %(int(order), item)
+def new_order(foodjson):
+    food1 = foodjson[0]
+    food2 = foodjson[1]
+    food3 = foodjson[2]
+    #foods = foodjson[0] # {"order": "5", "item": "beef"}
+    # int(foods[0]['order']), foods[0]['item']
+    sql = "UPDATE orders SET order_qty = ('%d') WHERE item = ('%s')" %(int(food1['order']), food1['item'])
+    db = get_db()
+    db.execute(sql)
+    sql = "UPDATE orders SET order_qty = ('%d') WHERE item = ('%s')" %(int(food2['order']), food2['item'])
+    db = get_db()
+    db.execute(sql)
+    sql = "UPDATE orders SET order_qty = ('%d') WHERE item = ('%s')" %(int(food3['order']), food3['item'])
     db = get_db()
     db.execute(sql)
     res = db.commit()
     return res
+    
+    #sql = "UPDATE orders SET order_qty = ('%d') WHERE item = ('%s')" %int(food['order']), food['item'])
+    #db = get_db()
+    #db.execute(sql)
+    #res = db.commit()
+    #return res
 
 def find_item(name=''):
     sql = "select * from price where item = '%s' limit 1" %(name)
@@ -102,12 +114,9 @@ def find_item_by_name():
 
 @app.route('/order', methods=['POST'])
 def add_order():
-    #import chickened
-    #chickened.myFunction()
-
-    subprocess.call(['python', '/home/laetitiatam/mysite/chickened.py'])
-    print(new_order(item=request.form['item'], order=request.form['order']))
-    return 'ok'
+    #print(new_order(item=request.form['item'], order=request.form['order']))
+    new_order(request.get_json())
+    return jsonify(request.get_json())
 
 @app.route('/all_items', methods=['GET'])
 def all_items():
@@ -122,4 +131,8 @@ def chickens():
     subprocess.call(['python', '/home/laetitiatam/mysite/chickened.py'])
     return 'chickens!'
 
-if __name__ == '__main__' : app.run(debug=True)
+
+@app.route('/beefify')
+def run_beef():
+    #subprocess.call(['python', '/home/laetitiatam/mysite/test.py'], shell=False)
+    return 'Beef!'
