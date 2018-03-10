@@ -51,12 +51,12 @@ def add_food(item, price, quantity):
     res = db.commit()
     return res
 
-def add_order(item, ordered):
-    sql = "INSERT INTO price (item, price, quantity) VALUES('%s', '%f', %d)" %(item, float(price), int(quantity))
-    db = get_db()
-    db.execute(sql)
-    res = db.commit()
-    return res
+#def add_order(item, ordered):
+#    sql = "INSERT INTO price (item, price, quantity) VALUES('%s', '%f', %d)" %(item, float(price), int(quantity))
+#    db = get_db()
+#    db.execute(sql)
+#    res = db.commit()
+#    return res
 
 def find_item(name=''):
     sql = "select * from price where item = '%s' limit 1" %(name)
@@ -99,7 +99,7 @@ def find_item_by_name():
 
 @app.route('/order', methods=['POST'])
 def add_order():
-    chicken.myFunction()
+    chicken.myFunction(request.get_json())
     return jsonify(request.get_json())
 #    item_name = request.args.get('item', '')
 #    qty_ordered =  request.args.get('ordered','')
@@ -113,6 +113,6 @@ def add_order():
 def all_items():
     menu = find_all_items()
     return jsonify(menu)
-    #return jsonify(item=menu['item'], price=menu['price'], quantity=menu['quantity'])
+    
 
 if __name__ == '__main__' : app.run(debug=True)

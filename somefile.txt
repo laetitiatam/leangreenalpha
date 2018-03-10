@@ -2,3 +2,7 @@ Price of chicken is now 2.82Price of chicken is now -7.86Price of chicken is now
 Price of chicken is now -16.07
 Price of chicken is now -22.82
 Price of chicken is now -21.18
+Price of chicken is now -12.59
+newOrder
+Price of chicken is now -14.13
+{"item": "burger", "ordered": "10"}
