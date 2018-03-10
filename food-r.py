@@ -2,13 +2,18 @@ import datetime
 import sqlite3
 import pickle
 import time
+
+
+
+
 i=0
-database_file = 'database.db'
+
+database_file = '/home/laetitiatam/mysite/database.db'
 beef_pickle = 'beef_clf.pickle'
 veggie_pickle = 'veggie_clf.pickle'
 chicken_pickle = 'chicken_clf.pickle'
 
-while i < 1 : #True:
+while i < 1: # True:
 
     itemBeef = 'beef'
     itemVeggie = 'veggie'
@@ -36,7 +41,8 @@ while i < 1 : #True:
     amount0Chicken = 80
     priceAndQChicken = [[itemChicken, price0Chicken, amount0Chicken]]
 
-    conn = sqlite3.connect('database_file')  # connection
+    conn = sqlite3.connect(database_file)  # connection
+   
     c = conn.cursor()
     #c.execute('DROP TABLE price')
     c.execute('CREATE TABLE IF NOT EXISTS price(item TEXT, dollars FLOAT, quantity INTEGER)')
