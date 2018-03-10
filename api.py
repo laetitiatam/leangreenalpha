@@ -14,8 +14,13 @@ Created on Fri Mar  9 17:59:53 2018
 
 from flask import Flask, jsonify, g, request
 from sqlite3 import dbapi2 as sqlite3
-import chicken
-DATABASE = 'database.db'
+import subprocess
+#DATABASE = 'database.db'
+#app = Flask(__name__)
+
+
+
+DATABASE = '/home/laetitiatam/mysite/database.db'
 app = Flask(__name__)
 
 
@@ -51,12 +56,12 @@ def add_food(item, price, quantity):
     res = db.commit()
     return res
 
-#def add_order(item, ordered):
-#    sql = "INSERT INTO price (item, price, quantity) VALUES('%s', '%f', %d)" %(item, float(price), int(quantity))
-#    db = get_db()
-#    db.execute(sql)
-#    res = db.commit()
-#    return res
+def new_order(item, order):
+    sql = "UPDATE orders SET order_qty = ('%d') WHERE item = ('%s')" %(int(order), item)
+    db = get_db()
+    db.execute(sql)
+    res = db.commit()
+    return res
 
 def find_item(name=''):
     sql = "select * from price where item = '%s' limit 1" %(name)
@@ -89,8 +94,6 @@ def add_user():
     print(add_food(item=request.form['item'], price=request.form['price'], quantity=request.form['quantity']))
     return ''
 
-
-
 @app.route('/find_item', methods=['GET'])
 def find_item_by_name():
     item_name = request.args.get('item', '')
@@ -99,20 +102,24 @@ def find_item_by_name():
 
 @app.route('/order', methods=['POST'])
 def add_order():
-    chicken.myFunction(request.get_json())
-    return jsonify(request.get_json())
-#    item_name = request.args.get('item', '')
-#    qty_ordered =  request.args.get('ordered','')
-#    dict = {}
-#    dict['item'] = item_name
-#    dict['quantity_ordered'] = qty_ordered
-#    return jsonify(dict)
+    #import chickened
+    #chickened.myFunction()
 
+    subprocess.call(['python', '/home/laetitiatam/mysite/chickened.py'])
+    print(new_order(item=request.form['item'], order=request.form['order']))
+    return 'ok'
 
 @app.route('/all_items', methods=['GET'])
 def all_items():
     menu = find_all_items()
     return jsonify(menu)
-    
+
+@app.route('/chickenify')
+def chickens():
+    test_string = 'thsi is a test'
+    with open('somefile.txt', 'a') as the_file:
+        the_file.write(test_string + '\n')
+    subprocess.call(['python', '/home/laetitiatam/mysite/chickened.py'])
+    return 'chickens!'
 
 if __name__ == '__main__' : app.run(debug=True)
