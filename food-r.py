@@ -3,10 +3,10 @@ import sqlite3
 import pickle
 import time
 i=0
-database_file = 'resto.db'
-beef_pickle = 'beef_clf.pickle'
-veggie_pickle = 'veggie_clf.pickle'
-chicken_pickle = 'chicken_clf.pickle'
+database_file = 'home/laetitiatam/mysite/database.db'
+beef_pickle = 'home/laetitiatam/mysite/beef_clf.pickle'
+veggie_pickle = 'home/laetitiatam/mysite/veggie_clf.pickle'
+chicken_pickle = 'home/laetitiatam/mysite/chicken_clf.pickle'
 
 while True:
 
