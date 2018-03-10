@@ -48,7 +48,7 @@ conn = sqlite3.connect('resto.db')  # connection
 c = conn.cursor()
 #c.execute('DROP TABLE IF EXISTS price')
 c.execute('CREATE TABLE IF NOT EXISTS price(item TEXT, price FLOAT, quantity INTEGER)')
-#c.execute('SELECT COUNT(*) FROM price WHERE item = \'chicken\'')
+c.execute('SELECT COUNT(*) FROM price WHERE item = \'chicken\'')
 if c.fetchone()==None:
     c.executemany('INSERT INTO price VALUES(?,?,?)',priceAndQ)
 else:
