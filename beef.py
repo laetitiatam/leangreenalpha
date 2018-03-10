@@ -109,5 +109,5 @@ while i<3: #True:
 
     print('Price of ', item,' is now ', round(rows[0][1],2), 'prediction is ', prediction, 'amount is ', amount)
 
-    #time.sleep(.1)
+    time.sleep(.1)
     i=1
