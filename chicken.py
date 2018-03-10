@@ -48,14 +48,6 @@ conn = sqlite3.connect('resto.db')  # connection
 c = conn.cursor()
 #c.execute('DROP TABLE IF EXISTS price')
 c.execute('CREATE TABLE IF NOT EXISTS price(item TEXT, price FLOAT, quantity INTEGER)')
-c.executemany('INSERT INTO price VALUES(?,?,?)', priceAndQ)
-conn.commit()
-conn.close()
-
-conn = sqlite3.connect('resto.db')  # connection
-c = conn.cursor()
-#c.execute('DROP TABLE IF EXISTS price')
-c.execute('CREATE TABLE IF NOT EXISTS price(item TEXT, price FLOAT, quantity INTEGER)')
 #c.execute('SELECT COUNT(*) FROM price WHERE item = \'chicken\'')
 if c.fetchone()==None:
     c.executemany('INSERT INTO price VALUES(?,?,?)',priceAndQ)
@@ -65,7 +57,7 @@ conn.commit()
 conn.close()
 
 
-#WHERE NOT EXISTS (SELECT 1 FROM price WHERE item = \'steak\''
+
 def tableFromDatabase(database, table):
     conn = sqlite3.connect(database)  # connection
     c = conn.cursor()  # get a cursor object, all SQL commands are processed by
